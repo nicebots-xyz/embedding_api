@@ -1,0 +1,80 @@
+[project]
+name = "embedding-api"
+version = "0.1.0"
+description = "CPU-optimized image embedding API using OpenCLIP"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "open-clip-torch>=2.24.0",
+    "torch>=2.2.0",
+    "torchvision>=0.17.0",
+    "Pillow>=10.0.0",
+    "httpx>=0.27.0",
+    "python-multipart>=0.0.9",
+]
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.38.2",
+    "ruff>=0.15.6",
+]
+
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+reportAny = false
+reportUnusedCallResult = false
+reportUnknownMemberType = false
+reportMissingTypeStubs = false
+pythonVersion = "3.11"
+
+[tool.uv]
+torch-backend = "cpu"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint]
+select = ["ALL"]
+extend-ignore = [
+    "N999",
+    "D104",
+    "D100",
+    "D103",
+    "D102",
+    "D101",
+    "D107",
+    "D105",
+    "D106",
+    "ANN401",
+    "TRY003",
+    "EM101",
+    "EM102",
+    "G004",
+    "PTH",
+    "D211",
+    "D213",
+    "COM812",
+    "ISC001",
+    "D203",
+    "FBT001",
+    "FBT002",
+    "PLR2004",
+    "PLR0913",
+    "C901",
+    "RUF200"
+]
+

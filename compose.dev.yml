@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: .
+      target: runtime
+    ports:
+      - "6789:8000"
+    volumes:
+      - model-cache:/model-cache
+    environment:
+      MAX_CONCURRENT: "2"
+      PYTHONUNBUFFERED: "1"
+
+volumes:
+  model-cache:
