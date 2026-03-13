@@ -1,4 +1,4 @@
-FROM python:3.11-slim AS deps
+FROM python:3.14-slim AS deps
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN uv sync --frozen --no-dev --no-install-project \
         --python python3.11 \
         --compile-bytecode
 
-FROM python:3.11-slim AS model-download
+FROM python:3.14-slim AS model-download
 
 COPY --from=deps /app/.venv /app/.venv
 
@@ -34,7 +34,7 @@ open_clip.create_model_and_transforms(
 print("Model weights cached.")
 EOF
 
-FROM python:3.11-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libglib2.0-0 \
