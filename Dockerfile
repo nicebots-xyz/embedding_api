@@ -8,13 +8,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+RUN pip install -U pdm
+ENV PDM_CHECK_UPDATE=false
 
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml pdm.lock LICENSE /app/
 
-RUN uv sync --frozen --no-dev --no-install-project \
-        --python python3.11 \
-        --compile-bytecode
+RUN pdm install --frozen-lockfile --prod --no-editable --no-self
 
 FROM python:3.11-slim AS model-download
 

@@ -3,7 +3,7 @@ name = "embedding-api"
 version = "0.1.0"
 description = "CPU-optimized image embedding API using OpenCLIP"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = "==3.11.*"
 dependencies = [
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.30.0",
@@ -21,6 +21,26 @@ dev = [
     "ruff>=0.15.6",
 ]
 
+[tool.pdm.resolution]
+respect-source-order = true
+
+[[tool.pdm.source]]
+url = "https://pypi.org/simple"
+name = "pypi"
+verify_ssl = true
+exclude_packages = ["torch", "torchvision"]
+
+[[tool.pdm.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cpu"
+include_packages = ["torch", "torchvision"]
+exclude_packages = ["*"]
+verify_ssl = true
+
+[tool.pdm.scripts]
+format = "ruff format ."
+lint = "ruff check --fix ."
+
 
 [tool.pyright]
 venvPath = "."
@@ -30,18 +50,6 @@ reportUnusedCallResult = false
 reportUnknownMemberType = false
 reportMissingTypeStubs = false
 pythonVersion = "3.11"
-
-[tool.uv]
-torch-backend = "cpu"
-
-[tool.uv.sources]
-torch = { index = "pytorch" }
-torchvision = { index = "pytorch" }
-
-[[tool.uv.index]]
-name = "pytorch"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true
 
 [tool.ruff]
 target-version = "py311"
