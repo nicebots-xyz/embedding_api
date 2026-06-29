@@ -1,4 +1,4 @@
-FROM python:3.11-slim AS deps
+FROM python:3.14-slim@sha256:b877e50bd90de10af8d82c57a022fc2e0dc731c5320d762a27986facfc3355c1 AS deps
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY pyproject.toml pdm.lock LICENSE /app/
 
 RUN pdm install --frozen-lockfile --prod --no-editable --no-self
 
-FROM python:3.11-slim AS model-download
+FROM python:3.14-slim@sha256:b877e50bd90de10af8d82c57a022fc2e0dc731c5320d762a27986facfc3355c1 AS model-download
 
 COPY --from=deps /app/.venv /app/.venv
 
@@ -33,7 +33,7 @@ open_clip.create_model_and_transforms(
 print("Model weights cached.")
 EOF
 
-FROM python:3.11-slim AS runtime
+FROM python:3.14-slim@sha256:b877e50bd90de10af8d82c57a022fc2e0dc731c5320d762a27986facfc3355c1 AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libglib2.0-0 \
